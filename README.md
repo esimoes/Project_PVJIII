@@ -1,9 +1,7 @@
-# EXCITEBIKE REMAKE
-
-![alt text](https://r.mprd.se/media/images/55400-Excitebike_(Europe)-1490840483.jpg)
+# BIKE RACE
 
 ### Introducción:
-El juego se basa en un remake del clásico juego de NES, con una adaptación hacia las plataformas modernas.
+El juego se basa en un remake del clásico juego motos de NES, con una adaptación hacia las plataformas modernas.
 
 ### Genero:
 Carreras
