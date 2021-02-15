@@ -10,7 +10,7 @@ Carreras
 Android
 
 ### Arte:
-Imágenes vectoriales, pero tratando de mantener su estilo clásico.
+Pixel Art
 
 ### Niveles:
 Como en el juego original se cuenta con 5 pistas y dos modos, desafío y excitebike.
