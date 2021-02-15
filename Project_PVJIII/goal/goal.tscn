@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://goal/Assets/lap_text.png" type="Texture" id=1]
+[ext_resource path="res://goal/goal.gd" type="Script" id=2]
+[ext_resource path="res://objects/ramp_middle.tres" type="Material" id=3]
+
+[sub_resource type="HeightMapShape" id=1]
+map_width = 7
+map_depth = 9
+map_data = PoolRealArray( -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1, -1, -0.5, 0, 0, 0, -0.5, -1 )
+
+[sub_resource type="PrismMesh" id=2]
+material = ExtResource( 3 )
+left_to_right = 1.0
+size = Vector3( 2, 1, 8 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 2, 1, 8 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.788744, 1.52483, 3.85877 )
+
+[node name="goal" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25394, 1.0108, 0.0325441 )
+shape = SubResource( 1 )
+
+[node name="MeshFront" type="MeshInstance" parent="StaticBody"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 4.25, 0.5, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshMiddle" type="MeshInstance" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0.5, 0 )
+mesh = SubResource( 3 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshBack" type="MeshInstance" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.5, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="TextSprite" type="Sprite3D" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.11725, 0.468343, -4.02673 )
+flip_h = true
+pixel_size = 0.02
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 4
+
+[node name="goalArea" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26904, 1.57191, 0 )
+monitorable = false
+
+[node name="CollisionGoal" type="CollisionShape" parent="goalArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.774215, 0 )
+shape = SubResource( 4 )
+[connection signal="body_entered" from="goalArea" to="." method="_on_goalArea_body_entered"]

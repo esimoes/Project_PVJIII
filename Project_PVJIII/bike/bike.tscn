@@ -1,0 +1,79 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://bike/Assets/bike.png" type="Texture" id=2]
+[ext_resource path="res://bike/bike.gd" type="Script" id=3]
+[ext_resource path="res://bike/Assets/wheel.png" type="Texture" id=4]
+[ext_resource path="res://bike/camera_bike.gd" type="Script" id=5]
+
+[sub_resource type="CylinderShape" id=3]
+radius = 0.5
+height = 0.122396
+
+[sub_resource type="CapsuleShape" id=4]
+radius = 0.15876
+height = 2.22129
+
+[node name="Bike" type="VehicleBody"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+script = ExtResource( 3 )
+TempStepNormal = 6
+TempStepTurbo = 10
+TempCooling = 3.0
+
+[node name="WheelRear" type="VehicleWheel" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+use_as_traction = true
+wheel_roll_influence = 1.0
+suspension_travel = 0.3
+suspension_stiffness = 40.0
+suspension_max_force = 1000.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="SpriteBack" type="Sprite3D" parent="WheelRear"]
+transform = Transform( -1.31134e-07, 0, -1, 0, 3, 0, 3, 0, -4.37114e-08, 0, 0, 0 )
+texture = ExtResource( 4 )
+
+[node name="WheelFront" type="VehicleWheel" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+use_as_traction = true
+use_as_steering = true
+wheel_roll_influence = 0.4
+suspension_travel = 0.3
+suspension_stiffness = 40.0
+suspension_max_force = 1000.0
+damping_compression = 0.3
+damping_relaxation = 0.5
+
+[node name="SpriteFront" type="Sprite3D" parent="WheelFront"]
+transform = Transform( -1.31134e-07, 0, -1, 0, 3, 0, 3, 0, -4.37114e-08, 0, 0, 0 )
+texture = ExtResource( 4 )
+
+[node name="CollisionRear" type="CollisionShape" parent="."]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, -0.01, -1 )
+shape = SubResource( 3 )
+
+[node name="CollisionFront" type="CollisionShape" parent="."]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, -0.01, 1 )
+shape = SubResource( 3 )
+
+[node name="CollisionBike" type="CollisionShape" parent="."]
+transform = Transform( -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0, 1, 0, 0.757722, 0 )
+shape = SubResource( 4 )
+
+[node name="CameraBase" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73524, 0 )
+
+[node name="Camera" type="Camera" parent="CameraBase"]
+transform = Transform( -1.62921e-07, 0.573577, -0.819152, 0, 0.819152, 0.573577, 1, 9.34475e-08, -1.33457e-07, -8, 5, 0 )
+projection = 1
+current = true
+size = 14.0
+near = 0.01
+far = 26.4
+script = ExtResource( 5 )
+
+[node name="SpriteBody" type="Sprite3D" parent="."]
+transform = Transform( -4.88762e-07, 0, -1, 0, 3, 0, 3, 0, -1.62921e-07, 0.00451702, 0.522023, 0 )
+texture = ExtResource( 2 )

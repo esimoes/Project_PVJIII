@@ -1,0 +1,115 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scene/Assets/grandstand.png" type="Texture" id=1]
+[ext_resource path="res://scene/Assets/road.png" type="Texture" id=2]
+[ext_resource path="res://scene/Assets/grass.png" type="Texture" id=3]
+[ext_resource path="res://scene/Assets/grass_2.png" type="Texture" id=4]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 12, 8 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 6, 4, 1 )
+uv1_triplanar_sharpness = 0.732043
+
+[sub_resource type="PlaneMesh" id=4]
+size = Vector2( 12, 6 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_texture = ExtResource( 3 )
+uv1_triplanar_sharpness = 0.999999
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 3, 1, 0 )
+uv1_triplanar_sharpness = 0.63728
+
+[sub_resource type="PlaneMesh" id=7]
+material = SubResource( 6 )
+size = Vector2( 12, 2 )
+
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 6, 0.001, 12 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 6, 2, 0.1 )
+
+[node name="Spatial" type="StaticBody"]
+physics_material_override = SubResource( 1 )
+
+[node name="Road" type="MeshInstance" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.001, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="GrassBack" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 1.71712, 6.43854 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="GrassFront" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, -1.64723, -6.43531 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="grandstand" type="MeshInstance" parent="."]
+transform = Transform( -1, -3.14739e-07, -8.43339e-08, 0, 0.258819, -0.965926, 3.25841e-07, -0.965926, -0.258819, 0, 2.55655, 6.38076 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="CollisionGround" type="CollisionShape" parent="."]
+shape = SubResource( 8 )
+
+[node name="CollisionWallFront" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.97968, -4.08711 )
+shape = SubResource( 9 )
+
+[node name="CollisionWallBack" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.97968, 4.12469 )
+shape = SubResource( 9 )
+
+[node name="Group_Grass" type="Spatial" parent="."]
+visible = false
+
+[node name="Grass_1" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 3.88426, 0.143942, -4.92782 )
+texture = ExtResource( 4 )
+
+[node name="Grass_2" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 4.39339, 0.143942, -4.70916 )
+texture = ExtResource( 4 )
+
+[node name="Grass_3" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 4.85332, 0.143942, -5.05506 )
+texture = ExtResource( 4 )
+
+[node name="Grass_4" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 2.79747, 0.143942, -4.92782 )
+texture = ExtResource( 4 )
+
+[node name="Grass_5" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 1.9263, 0.143942, -4.45497 )
+texture = ExtResource( 4 )
+
+[node name="Grass_6" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 2.35479, 0.143942, -4.53009 )
+texture = ExtResource( 4 )
+
+[node name="Grass_7" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 1.9575, 0.143942, -5.14005 )
+texture = ExtResource( 4 )
+
+[node name="Grass_8" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 1.41076, 0.143942, -4.92782 )
+texture = ExtResource( 4 )
+
+[node name="Grass_9" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 0.925613, 0.143942, -4.56247 )
+texture = ExtResource( 4 )
+
+[node name="Grass_10" type="Sprite3D" parent="Group_Grass"]
+transform = Transform( 1, 0, 0, 0, 0.819152, -0.573577, 0, 0.573577, 0.819152, 3.27967, 0.143942, -5.18189 )
+texture = ExtResource( 4 )

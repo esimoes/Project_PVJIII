@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/mud.gd" type="Script" id=1]
+[ext_resource path="res://objects/Assets/mud.png" type="Texture" id=2]
+
+[sub_resource type="CylinderShape" id=3]
+radius = 0.708815
+height = 0.01
+
+[node name="Mud" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Area" type="Area" parent="."]
+linear_damp = 1.0
+angular_damp = 1.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0642471, 0 )
+shape = SubResource( 3 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Area"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.1, 0 )
+layers = 2147483649
+texture = ExtResource( 2 )
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
