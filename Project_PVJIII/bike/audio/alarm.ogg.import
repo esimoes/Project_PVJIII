@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/alarm.ogg-29de6b1e7aa1e02c7d5e41ef8b497377.oggstr"
+
+[deps]
+
+source_file="res://bike/audio/alarm.ogg"
+dest_files=[ "res://.import/alarm.ogg-29de6b1e7aa1e02c7d5e41ef8b497377.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

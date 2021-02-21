@@ -1,15 +1,51 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://bike/bike.tscn" type="PackedScene" id=1]
-[ext_resource path="res://game/ui_game.gd" type="Script" id=2]
-[ext_resource path="res://objects/ramp.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/UI/ui_game.gd" type="Script" id=2]
+[ext_resource path="res://game/BeginRace.gd" type="Script" id=3]
 [ext_resource path="res://game/game.gd" type="Script" id=4]
 [ext_resource path="res://bike/Assets/clock.png" type="Texture" id=5]
 [ext_resource path="res://bike/Assets/steering.png" type="Texture" id=6]
 [ext_resource path="res://bike/Assets/tempBar.png" type="Texture" id=7]
+[ext_resource path="res://blink_shadermaterial.tres" type="Material" id=8]
+[ext_resource path="res://game/UI/Assets/win.png" type="Texture" id=9]
+[ext_resource path="res://game/UI/Assets/reboot.png" type="Texture" id=10]
+[ext_resource path="res://game/UI/Assets/backgroundPopup.png" type="Texture" id=11]
+[ext_resource path="res://game/Popup.gd" type="Script" id=12]
+[ext_resource path="res://game/UI/timeText.tres" type="DynamicFont" id=13]
+[ext_resource path="res://game/UI/Assets/lose.png" type="Texture" id=14]
+[ext_resource path="res://game/UI/Fonts/consola.ttf" type="DynamicFontData" id=15]
+[ext_resource path="res://game/audio/race-countdown.wav" type="AudioStream" id=16]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+glow_blend_mode = 1
+
+[sub_resource type="DynamicFont" id=3]
+size = 37
+outline_size = 3
+outline_color = Color( 0.160784, 0.160784, 0.160784, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 23
+outline_size = 2
+outline_color = Color( 0.054902, 0.054902, 0.054902, 1 )
+extra_spacing_char = 1
+font_data = ExtResource( 15 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 4 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
 
 [node name="Bike" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 12, 0.457, 0 )
@@ -17,26 +53,113 @@ transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 12, 0.4
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.502598, 0.86452, 0, -0.86452, -0.502598, -5.53944, 8.48764, -7.91722 )
 
-[node name="DirectionalLight2" type="DirectionalLight" parent="."]
-transform = Transform( 0.855681, 0.332646, 0.396431, 2.49609e-07, -0.766044, 0.642788, 0.517504, -0.550021, -0.655489, 10.1446, 4.42288, -4.19648 )
-visible = false
-light_energy = 1.3
-light_specular = 0.49
-light_bake_mode = 0
-shadow_enabled = true
-
-[node name="ramp" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.999883, 0, 0.0153232, 0, 1, 0, -0.0153232, 0, -0.999883, -15.5592, 0, 0.305353 )
-
 [node name="ui_game" type="Control" parent="."]
-anchor_left = 0.002
-anchor_top = 0.795
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -0.0480001
-margin_right = 1.0
-margin_bottom = 1.0
+anchor_top = 0.769
+anchor_bottom = 0.769
+margin_top = -23.5201
+margin_right = 1917.0
+margin_bottom = 249.48
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="Container" parent="ui_game"]
+pause_mode = 2
+visible = false
+margin_left = 958.0
+margin_top = -281.5
+margin_right = 958.0
+margin_bottom = -281.5
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="ui_game/Container"]
+margin_left = -128.0
+margin_top = -128.0
+margin_right = 128.0
+margin_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="winTexture" type="TextureRect" parent="ui_game/Container"]
+visible = false
+margin_left = -60.0
+margin_top = -51.0
+margin_right = 68.0
+margin_bottom = 23.0
+focus_mode = 1
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="loseTexture" type="TextureRect" parent="ui_game/Container"]
+visible = false
+margin_left = -60.0
+margin_top = -51.0
+margin_right = 68.0
+margin_bottom = 23.0
+focus_mode = 1
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pause" type="RichTextLabel" parent="ui_game/Container"]
+visible = false
+margin_left = -112.0
+margin_top = -17.0
+margin_right = 114.0
+margin_bottom = 16.0
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]PAUSE[/center]"
+text = "PAUSE"
+scroll_active = false
+
+[node name="Button" type="Button" parent="ui_game/Container"]
+margin_left = -118.0
+margin_top = 57.0
+margin_right = 120.0
+margin_bottom = 45.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+text = "Back main menu"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rebootButton" type="TextureButton" parent="ui_game/Container"]
+margin_left = 55.0
+margin_top = -114.0
+margin_right = 32.0
+margin_bottom = -69.0
+rect_min_size = Vector2( 32, 32 )
+rect_clip_content = true
+focus_neighbour_bottom = NodePath("../Button")
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 10 )
+texture_hover = ExtResource( 10 )
+texture_disabled = ExtResource( 10 )
+texture_focused = ExtResource( 10 )
+stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -56,29 +179,28 @@ __meta__ = {
 }
 
 [node name="bikeSteering" type="TextureRect" parent="ui_game"]
-anchor_left = 0.431
-anchor_top = 0.055
-anchor_right = 0.609
-anchor_bottom = 1.0
-margin_left = -163.606
-margin_top = 0.0188665
-margin_right = 174.3
-margin_bottom = 2.83887
+margin_left = 412.13
+margin_top = 1.0
+margin_right = 1606.13
+margin_bottom = 274.0
 texture = ExtResource( 6 )
+expand = true
 stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="tempBar" type="TextureProgress" parent="ui_game/bikeSteering"]
-anchor_left = 0.395
-anchor_top = 0.083
-anchor_right = 0.595
-anchor_bottom = 0.934
-margin_left = -0.0254364
-margin_top = 1.04
-margin_right = -0.0254517
-margin_bottom = -84.08
+material = ExtResource( 8 )
+use_parent_material = true
+anchor_left = 0.393
+anchor_top = 0.075
+anchor_right = 0.588
+anchor_bottom = 0.234
+margin_left = -1.242
+margin_top = 3.525
+margin_right = -0.0720215
+margin_bottom = 0.117996
 step = 5.0
 texture_under = ExtResource( 7 )
 texture_progress = ExtResource( 7 )
@@ -89,57 +211,87 @@ __meta__ = {
 }
 
 [node name="bikeClock" type="TextureRect" parent="ui_game"]
-anchor_left = 0.802
-anchor_right = 0.927
-anchor_bottom = 0.969
-margin_left = -0.0441895
-margin_top = 15.1627
-margin_right = 0.0808105
-margin_bottom = 23.0067
+anchor_left = 0.785
+anchor_top = 0.5
+anchor_right = 0.785
+anchor_bottom = 0.5
+margin_left = 137.155
+margin_top = -89.5
+margin_right = 373.155
+margin_bottom = 146.5
+mouse_filter = 2
 texture = ExtResource( 5 )
+stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="time" type="Label" parent="ui_game/bikeClock"]
-anchor_left = 0.219
-anchor_top = 0.5
-anchor_right = 0.797
-anchor_bottom = 0.594
-margin_left = -0.0320015
-margin_top = -2.0
-margin_right = -0.0160065
-margin_bottom = -0.0320053
+anchor_left = 0.205
+anchor_top = 0.438
+anchor_right = 0.805
+anchor_bottom = 0.653
+margin_left = -2.38
+margin_top = -5.368
+margin_right = 0.019989
+margin_bottom = -0.108017
+custom_fonts/font = ExtResource( 13 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "00 : 00 : 00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui_game/bikeClock"]
+anchor_left = 0.242
+anchor_top = 0.282
+anchor_right = 0.773
+anchor_bottom = 0.399
+margin_left = -5.50653
+margin_top = 2.14526
+margin_right = 1.17747
+margin_bottom = 2.16925
+custom_fonts/font = ExtResource( 13 )
+text = "Current Time"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="bikeRecord" type="TextureRect" parent="ui_game"]
-anchor_left = 0.062
-anchor_right = 0.173
-anchor_bottom = 0.969
-margin_left = -0.0204849
-margin_top = -1.21628
-margin_right = 14.4265
-margin_bottom = 6.62772
+anchor_left = 0.081
+anchor_top = 0.183
+anchor_right = 0.081
+anchor_bottom = 0.183
+margin_left = -0.277008
+margin_top = -2.959
+margin_right = 235.723
+margin_bottom = 233.041
+mouse_filter = 2
 texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="time" type="Label" parent="ui_game/bikeRecord"]
 anchor_left = 0.219
-anchor_top = 0.5
-anchor_right = 0.797
-anchor_bottom = 0.594
-margin_left = -0.0320015
-margin_top = -2.0
-margin_right = -0.0160065
-margin_bottom = -0.0320053
+anchor_top = 0.424
+anchor_right = 0.784
+anchor_bottom = 0.653
+margin_left = -1.684
+margin_top = -1.064
+margin_right = 1.976
+margin_bottom = -0.108017
+custom_fonts/font = ExtResource( 13 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "00 : 00 : 00"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -153,4 +305,25 @@ margin_left = 0.0239983
 margin_top = 0.0264359
 margin_right = 0.0559921
 margin_bottom = 0.0504341
+custom_fonts/font = ExtResource( 13 )
 text = "Best Time"
+align = 1
+valign = 1
+
+[node name="BeginRace" type="Node" parent="."]
+pause_mode = 2
+script = ExtResource( 3 )
+
+[node name="waitng" type="Timer" parent="BeginRace"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="start" type="AudioStreamPlayer" parent="BeginRace"]
+stream = ExtResource( 16 )
+bus = "Countdown"
+[connection signal="quit" from="ui_game/Container" to="." method="_on_Container_quit"]
+[connection signal="replace_main_scene" from="ui_game/Container" to="." method="_on_Container_replace_main_scene"]
+[connection signal="pressed" from="ui_game/Container/Button" to="ui_game/Container" method="_on_Button_pressed"]
+[connection signal="pressed" from="ui_game/Container/rebootButton" to="ui_game/Container" method="_on_rebootButton_pressed"]
+[connection signal="timeout" from="BeginRace/waitng" to="Bike" method="_on_waitng_timeout"]
